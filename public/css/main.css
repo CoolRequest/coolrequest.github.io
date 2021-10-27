@@ -1,0 +1,32 @@
+:root {
+  --main-color: hsl(184, 73%, 45%);
+  --accent-color: hsl(20, 90%, 72%);
+}
+.badge {
+  background-color: var(--accent-color);
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 85%;
+  margin: 0.3rem 0.3rem;
+  display: inline-block;
+}
+.bio {
+  margin-top: 1.75rem;
+  display: flex;
+}
+.bio img {
+  border-radius: 50%;
+  height: 6rem;
+  width: 6rem;
+  margin-right: 1.5rem;
+}
+.bio .info {
+    width: 100%;
+}
+.bio .info h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--main-color);
+  margin-top:0.1rem;
+}
