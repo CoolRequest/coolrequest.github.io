@@ -1,30 +1,34 @@
 ---
 layout: post
-title: Dockerizing Rails Applications
+title: Building a Docker Image from your Rails Application
 ---
 
 <!--
 Pendencias da Parte 1:
-- colocar a aplicação demo num repositório coolrequest (rails_docker_demo) e acertar os links do Dockerfile e .dockerignore
-- explicar por que nulldb no assets precompile
-- falar em como setar o environment
-- falar em RAILS_LOG_TO_STDOUT
-- criar um texto de fechamento para o final do post
-- ressaltar por que as coisas que não mudam tem que vir antes
-- falar em dividir o dockerfile em dois (o "base com banco" e o da aplicação)
-- colocar também um docker-compose de exemplo no repositório
-- depois que terminar, seguir os passos do inicio ao fim e ver se funciona (rodar o build e subir a aplicacao)
+- fazer subir app demo (docker build + docker compose up) (pq não tá achando o root path??
+- pq nao ta funcionando o CMD?
+- checar se os comandos explicados no post correspondem aos do Dockerfile que está no repositório
+- pesquisar alguns posts sobre o assunto pra fazer um benchmark
+- quando estiver no ar o post, acertar o link no README do repositorio da aplicacao
 
 ** DONE
 - instalação do postgresql não está funcionando
 - faltou falar do .dockerignore
 - rever comando para instalação do yarn
 - ajustar comando do bundle
+- colocar a aplicação demo (workspace/acme/docker_app) num repositório coolrequest (nome rails_docker_demo)
+- explicar por que nulldb no assets precompile
+- falar em RAILS_LOG_TO_STDOUT e que tem que editar o development.rb para incluir essa configuracao. aproveitar e falar do .env
+- faltou explicar/incluir o EXPOSE e o CMD
+- criar um texto de fechamento para o final do post
+- colocar também um docker-compose de exemplo no repositório
+- rodar o bundle antes de copiar a app
+- ressaltar por que as coisas que não mudam tem que vir antes
+- acertar os links do Dockerfile e .dockerignore no post
 
 Backlog Para a parte 2: --------------------------------------------------------------
 - rodar yarn antes de copiar a app
-- rodar bundle antes de copiar a app
-- explicar o rolo do bundle “deployment”
+- falar em dividir o dockerfile em dois (o "base com banco" e o da aplicação)
 - mudando para multi stage build (talvez não faça sentido agora com as gems novas)
 - instalando algumas gems manualmente antes do bundle
 -->
@@ -47,7 +51,7 @@ Now let's get started. The first thing to be aware of when containerizing your a
 
 ```
 default: &default
-  adapter: postgresql
+  adapter: adapter: <%= ENV["DB_ADAPTER"] || 'postgresql') %>
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS", 20) %>
   database: <%= ENV["DB_DATABASE"] %>
@@ -67,6 +71,27 @@ staging:
 
 production:
   <<: *default
+```
+
+If you start your application using Docker Compose, it will automatically load environment variables from a file called `.env` in the working directory, if it finds one. If not using docker in your development environment, you might find it convenient to use the [dotenv](https://github.com/bkeepers/dotenv) gem. Your `.env` file should look like this:
+```
+RAILS_LOG_TO_STDOUT=true
+RAILS_ENV=production
+
+DB_DATABASE=rails_docker_demo
+DB_USERNAME=rails_docker_demo
+DB_PASSWORD=my_pg_pass123
+DB_HOST=db                    # hostname of your database server
+DB_PORT=5432
+```
+
+Note the `RAILS_LOG_TO_STDOUT` variable. When running your application on docker, you should not log to the filesystem. The default-generated Rails configuration will test for this variable when running in staging or production environment. If you intend to run your development environment on Docker, you should copy this code from `config/environments/production.rb` to `config/environments/development.rb`:
+```
+if ENV["RAILS_LOG_TO_STDOUT"].present?
+  logger           = ActiveSupport::Logger.new(STDOUT)
+  logger.formatter = config.log_formatter
+  config.logger    = ActiveSupport::TaggedLogging.new(logger)
+end
 ```
 
 <!--dockerfile v1-->
@@ -125,7 +150,23 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 ```
 
-So far, we have covered environment setup. Now we will start installing the application itself. First, we coppy the application files:
+So far, we have covered environment setup. Now we will start installing the application itself. First, let's install the ruby dependencies:
+```
+COPY Gemfile .
+COPY Gemfile.lock .
+RUN bundle
+```
+You might be thinking: why not just copy all the application files and then run bundle install? 
+Well, the docker build process executes a series of commands based on a context. The context, in this case, are the files that you include with the COPY command. If the context does not change between builds, docker will use a cached result instead of executing the command again. If we had copied the entire application in this step, whenever you changed any file, the build process would reinstall all the gems. Copying only the bundle-related files has the effect of invalidating the docker build cache only when the bundle changes.
+
+Continuing with the setup, install javascript dependencies:
+```
+COPY package.json .
+COPY yarn.lock .
+RUN yarn
+```
+
+Then, we copy the application files:
 ```
 RUN mkdir -p /app
 WORKDIR /app
@@ -135,23 +176,25 @@ There is one important thing to note here, tough. When docker runs the command `
 - It will increase the image size
 - Every time one of these file changes, it will trigger an unnecessary rebuild of the image
 
-To solve this, you should have a `.dockerignore` file that tells docker which files you *do not* want in the resulting image. You can read about it [here](https://docs.docker.com/engine/reference/builder/#dockerignore-file), if you are not familiar, or grab the [example](url_for_dockerignore_here) from our rails_docker_demo repository.
+To solve this, you should have a `.dockerignore` file that tells docker which files you *do not* want in the resulting image. You can read about it [here](https://docs.docker.com/engine/reference/builder/#dockerignore-file), if you are not familiar, or grab the [example](https://github.com/CoolRequest/rails_docker_demo/blob/master/.dockerignore) from our rails_docker_demo repository.
 
-Then, install ruby dependencies:
-```
-RUN bundle install
-```
 
-.. and javascript dependencies:
-```
-RUN yarn
-```
-
-The assets are going to be precompiled during the image build process:
+Next, compile the assets:
 ```
 RUN bundle exec rake assets:precompile DB_ADAPTER=nulldb NODE_ENV=development RAILS_ENV=staging SECRET_KEY_BASE=123
 ```
+The `DB_ADAPTER=nulldb` variable is worth mentioning. When rails runs this rake task, it will boot the application in order to run the compiling. Depending on your environment, you might not have the environment varibles with database connection parameters at this moment, which would result in an error. So we use the [nulldb](https://github.com/nulldb/nulldb) adapter, database backend that translates database interactions into no-ops.
+
+Finally, the EXPOSE command informs the TCP port the container will be responding on, and CMD provides a default command for running the server:
+```
+EXPOSE 3000
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+```
 
 <!-- fechamento -->
-That's it. Now you can run your Rails application inside a Docker container, be it for development or production. You can access the full Dockerfile in [this link](https://github.com/coolrequest/docker_demo/Dockerfile).
+These are the steps necessary to make a Docker image from your Rails app. You can access the full Dockerfile in [this link](https://github.com/CoolRequest/rails_docker_demo/blob/master/Dockerfile).
 Stay tuned for part 2 of this series, we will show some optimizations that can be done to this basic Dockerfile.
+
+---
+
+If you want to run your application on Docker but lack the necessary time or experience, feel free to contact us and we will be happy to give you a hand.
