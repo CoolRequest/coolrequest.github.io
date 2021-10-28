@@ -30,3 +30,11 @@
   color: var(--main-color);
   margin-top:0.1rem;
 }
+
+.sidebar {
+  background-color: var(--main-color);
+}
+.content a,
+.related-posts li a:hover {
+  color: var(--main-color);
+}
