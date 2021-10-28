@@ -157,7 +157,7 @@ code {
   font-size: 85%;
   color: #bf616a;
   background-color: #f9f9f9;
-  border-radius: 3px;
+  border-radius: 6px;
 }
 pre {
   display: block;
@@ -274,8 +274,8 @@ tbody tr:nth-child(odd) th {
 .message {
   margin-bottom: 1rem;
   padding: 1rem;
-  color: #717171;
-  background-color: #f9f9f9;
+  color: #696969;
+  background-color: hsl(20deg 80% 96%);
 }
 
 
