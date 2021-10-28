@@ -25,9 +25,9 @@ Now let's get started. The first thing to notice when containerizing your applic
 
 {% highlight yaml %}
 default: &default
-  adapter: adapter: <%= ENV["DB_ADAPTER"] || 'postgresql' %>
+  adapter: <%= ENV["DB_ADAPTER"] || 'postgresql' %>
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 20) %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 10) %>
   database: <%= ENV["DB_DATABASE"] %>
   username: <%= ENV["DB_USERNAME"] %>
   password: <%= ENV["DB_PASSWORD"] %>
@@ -49,7 +49,7 @@ production:
 
 If you start your application using Docker Compose, it will automatically load environment variables from a file called `.env` in the working directory, if it finds one. If not using docker in your development environment, you might find it convenient to use the [dotenv](https://github.com/bkeepers/dotenv) gem. Your `.env` file should look like this:
 
-{% highlight dot %}
+{% highlight ini %}
 RAILS_LOG_TO_STDOUT=true
 RAILS_SERVE_STATIC_FILES=true
 RAILS_ENV=production
@@ -57,7 +57,7 @@ RAILS_ENV=production
 DB_DATABASE=rails_docker_demo
 DB_USERNAME=rails_docker_demo
 DB_PASSWORD=my_pg_pass123
-DB_HOST=localhost        # hostname of your database server
+DB_HOST=localhost
 DB_PORT=5432
 {% endhighlight %}
 
