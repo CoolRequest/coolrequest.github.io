@@ -1,9 +1,9 @@
 # Setup
 title:            Cool<br>Request
-tagline:          'A Ruby Shop'
+tagline:          'A blog about Software, the Universe and Everything'
 description:      'A blog about Software, the Universe and Everything'
 url:              https://coolrequest.dev
-baseurl:          /
+#baseurl:          /
 paginate:         5
 
 # About and contact
