@@ -22,7 +22,7 @@ There are no correct answers here, as this depends on many factors that are appl
 
 <!-- configs -->
 
-### Configuration Data
+### Configuration Files
 Now let's get started. The first thing to notice when containerizing your application is that you should not have any configuration data in your docker image. Instead, the configuration files should reference environment variables that are defined elsewhere, outside the image. This allows you to use the same image in different environments, just by setting the appropriate values for the variables.
 
 To achieve this, you will have to look at the source code searching for files that hold database connection settings, URLs for external services, and any other parameters that might change depending on the environment. Typical files to look are `config/database.yml`, `config/storage.yml`, and `config/initializers/*`. You should replace hard-coded values with environment variables. Here is what an example `database.yml` that references environment variables, using *postgresql* as an example:
@@ -53,64 +53,47 @@ production:
 
 ### Providing values for the environment variables
 
-The values for the environment variables need to be provided when you run your container. If you start your application using Docker Compose, it will automatically load environment variables from a file called `.env` in the working directory, if it finds one. You can also supply additional .env files in your docker-compose.yml, if you like.
+The values for the environment variables need to be informed when you run your container. If you start your application using Docker Compose, it will automatically load environment variables from a file called `.env` in the working directory, if it finds one. You can also supply additional *.env* files in your `docker-compose.yml`, if you like.
 
-For development, you might find it convenient to use the [dotenv](https://github.com/bkeepers/dotenv) gem. It has these main benefits:
-- It loads values from .env files into your environments independently of docker compose, allowing you use the same config files inside or outside a docker container.
-- It allows you to have multiple .env files, and automatically load the ones corresponding to your environment
-- It takes a 3-level hierarchical approach
-  - `.env` - holds settings common to all environments
-  - `.env.development` (and similarly, .env.staging / .env.production) - environment specific settings. overrides variables from `.env`
-  - `.env.development.local` - optionally, if you want to have settings only on your local machine and not mess up your git history, you can use this file to set local values.
+For development, you might find it convenient to use the [dotenv](https://github.com/bkeepers/dotenv) gem. It will allow you to run your development server in the same way you normally would, while loading environment variables from your `.env` file. You can also have multiple files, and `dotenv` will combine them to form your configuration.
 
-Here is an example configuration using multiple `.env` files:
+Here is an example configuration with 3 files:
 
 {% highlight ini %}
 # .env
+# this file contains settings common to all environments
 RAILS_LOG_TO_STDOUT=true
 RAILS_SERVE_STATIC_FILES=true
-RAILS_ENV=production
-
-# .env.development
 DB_DATABASE=rails_docker_demo
 DB_USERNAME=rails_docker_demo
+
+# .env.development
+# put settings specific for development environment here
 DB_PASSWORD=my_pg_pass123
-DB_HOST=localhost
+DB_HOST=dev_server_hostname
 DB_PORT=5432
+
+# .env.development.local
+# settings specific to this workstation
+DB_PASSWORD=my_pg_pass123
 {% endhighlight %}
 
 ### Should I commit or .gitignore my .env files?
 
-Basically:
-- don't commmit *.local
-- commit the others
-- but don't commit passwords (use secrets!)
+It is a good practice to commit your `.env` files to source control. You should avoid, however, including sensitive data like database passwords. For these, you should look for solutions like Docker Secrets or Kubernetes Secrets, depending on your production environment.
 
-### Rails Configs for docker
+Dotenv also supports the use of local env files (*.env.\*.local*). These allow you to make settings local to a specific machine and should be gitignored.
 
-What about the RAILS_LOG_TO_STDOUT that appeared earlier?
 
-<!-- 
+### Logging
 
-- tirar a parte de copiar a configuracao relativa ao RAILS_LOG_TO_STDOUT
-- só explicar por que a variável está ali
-- ver se tem mais alguma config que seja relevante
+Did you notice the `RAILS_LOG_TO_STDOUT` variable that appeared in the example `.env`?. It is not a good practice to write data to the container's filesystem, so this setting is used to send the logs to standard output. The default-generated Rails configuration will look for this variable when running in staging or production environment. 
 
--->
-
-Note the `RAILS_LOG_TO_STDOUT` variable. It is not a good practice to write data to the container's filesystem, so this setting is used to send the logs to standard output. The default-generated Rails configuration will test for this variable when running in staging or production environment. If you intend to run your development environment on Docker, you should copy this code from `config/environments/production.rb` to `config/environments/development.rb`:
-
-{% highlight ruby %}
-if ENV["RAILS_LOG_TO_STDOUT"].present?
-  logger           = ActiveSupport::Logger.new(STDOUT)
-  logger.formatter = config.log_formatter
-  config.logger    = ActiveSupport::TaggedLogging.new(logger)
-end
-{% endhighlight %}
+Another important variable to configure are `RAILS_ENV`, that defines if you are in development, staging or production and `RAILS_SERVE_STATIC_FILES`, to make the static assets available through the same server.
 
 ### That's It
-This is how you change your application...
-In the next post...
+This is how you set up your application to run smoothly inside a Docker Container.
+In the next post we will start to look at how to transform it in a docker image by creating an appropriate Dockerfile.
 
 ---
 
