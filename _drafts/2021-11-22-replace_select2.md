@@ -16,7 +16,7 @@ And since it was renovating time, I also decided to consolidate all that JS used
 
 ## The simple case
 
-I wanted to make as simple as possible to use the solution from the HTML code. The simplest solution would be just adding a `data-controller` to a select tag.
+I wanted to make it as simple as possible to use the solution from the HTML code. The simplest solution would be just adding a `data-controller` to a select tag.
 
 {% highlight erb %}
 
@@ -70,7 +70,7 @@ Keeping the simplicity in mind, I wanted somenthing like:
 
 {% endhighlight %}
 
-The remote endpoint just returns a JSON Array with the matched results
+The remote endpoint just returns a JSON Array with the matching results
 
 {% highlight ruby %}
 
