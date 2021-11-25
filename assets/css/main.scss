@@ -1,0 +1,73 @@
+---
+# Jekyll needs front matter for SCSS files
+---
+
+:root {
+  --main-color: hsl(184, 73%, 45%);
+  --accent-color: hsl(20, 90%, 72%);
+}
+
+.badge {
+  background-color: var(--accent-color);
+  color: #fff;
+  padding: 0.2rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 85%;
+  margin: 0.3rem 0.3rem;
+  display: inline-block;
+}
+.bio {
+  margin-top: 1.75rem;
+  display: flex;
+}
+.bio img {
+  border-radius: 50%;
+  height: 6rem;
+  width: 6rem;
+  margin-right: 1.5rem;
+}
+.bio .info {
+    width: 100%;
+}
+.bio .info h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--main-color);
+  margin-top:0.1rem;
+}
+
+.sidebar {
+  background-color: var(--main-color);
+}
+.content a,
+.related-posts li a:hover {
+  color: var(--main-color);
+}
+
+.message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  color: #696969;
+  background-color: hsl(20, 80%, 96%);
+  border-radius: 0.5rem;
+}
+
+$sidebar-bg-color: #1fbbc7;
+$link-color: #1fbbc7;
+$layout-reverse: true;
+$heading-color: #1fbbc7;
+$root-font-family: "PT Sans", Helvetica, Arial, sans-serif;
+
+@import 'hydeout/variables';
+@import 'hydeout/base';
+@import 'hydeout/type';
+@import 'hydeout/code';
+@import 'hydeout/layout';
+@import 'hydeout/masthead';
+@import 'hydeout/posts';
+@import 'hydeout/pagination';
+@import 'hydeout/search';
+@import 'hydeout/tags';
+@import 'hydeout/back-link';
+
+@import "syntax1.css";
