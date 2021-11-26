@@ -97,7 +97,7 @@ end
 
 {% endhighlight %}
 
-Thanks to Tom Select support for [remote](https://tom-select.js.org/examples/remote/) data and using the handy [@rails/request.js](https://github.com/rails/request.js), the actual implementation ended up quite straightforward.
+Thanks to Tom Select's support for [remote](https://tom-select.js.org/examples/remote/) data and using the handy [@rails/request.js](https://github.com/rails/request.js), the actual implementation ended up quite straightforward.
 
 
 {% highlight js %}
@@ -240,6 +240,11 @@ export default class extends Controller {
 {% endhighlight %}
 
 It checks for a selected value every time the State changes and on connecting. Then it fetches or clears the results accordingly.
+
+---
+## Final Thoughts
+
+Tom Select is a very useful library to implement advanced behaviour in select tags, and can replace select2 with advantages. We've seen examples of 3 different scenarios. Using Stimulus allows us to implement advanced funcionalities in the select, while keeping the html simple and enabling reuse of the code across different pages.
 
 <div class="message">
   You can find a functional demo of this concept here <br><b><a href="https://tom-select.herokuapp.com/">https://tom-select.herokuapp.com/</a></b>
