@@ -1,0 +1,52 @@
+body {
+  background-color: $sidebar-bg-color;
+  background-image: linear-gradient(to bottom, lighten($sidebar-bg-color, 8%), darken($sidebar-bg-color, 8%));
+}
+
+#sidebar {
+  .site-title {
+    font-family: 'Bungee Shade', 'Abril Fatface', serif;
+    font-size: 2.5rem;
+  }
+  img#logo {
+    margin: 1.5rem auto;
+  }
+}
+
+
+/* -----------------------------------------------------------
+  Mobile view for home page)
+----------------------------------------------------------- */
+.home #sidebar {
+  .site-title {
+    font-size: 2.5rem;
+  }
+}
+
+/* -----------------------------------------------------------
+  Tablet / Desktop view
+----------------------------------------------------------- */
+@media (min-width: $large-breakpoint) {
+
+  /* Undo mobile CSS */
+
+  #sidebar {
+    .site-title {
+      font-size: 2.5rem;
+      .back-arrow { display: none; }
+    }
+  }
+}
+
+/* -----------------------------------------------------------
+  Sidebar links + nav
+----------------------------------------------------------- */
+#sidebar {
+  .site-title {
+    a:hover,
+    a:active {
+      text-decoration: none;
+      color: hsl(20, 90%, 90%);
+    }
+  }
+}

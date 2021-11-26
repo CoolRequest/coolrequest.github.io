@@ -3,8 +3,8 @@ markdown:         kramdown
 highlighter:      rouge
 
 # Setup
-title:            Cool<br>Request
-tagline:          'A blog about Ruby, Rails, Software, the Universe and Everything'
+title:            Cool Request
+tagline:          'A blog about Ruby, Rails & Software'
 description:      'A blog about Ruby, Rails, Software, the Universe and Everything'
 url:              https://coolrequest.dev
 baseurl:          '/'
@@ -35,3 +35,5 @@ sidebar_home_link:  true
                                 # page. If you change your paginate_path,
                                 # set this to the root of the paginate_path
                                 # to enable a separate blog link.
+
+google_analytics: G-FBCMH7QVZ6
