@@ -1,0 +1,22 @@
+{% if page.comments != false %}
+  <section class="comments">
+    <h2>Comments</h2>
+
+    <form method="POST" action="https://cr-staticman.herokuapp.com/v3/entry/github/CoolRequest/coolrequest.github.io/master/comments">
+      <input name="options[redirect]" type="hidden" value="https://{{ site.url }}">
+      <input name="options[slug]" type="hidden" value="{{ page.slug }}">
+
+      <label>Name</label>
+      <input name="fields[name]" type="text">
+
+      <label>E-mail</label>
+      <input name="fields[email]" type="email">
+
+      <label>Message</label>
+      <textarea name="fields[message]" rows=10></textarea>
+
+      <button type="submit">Go!</button>
+    </form>
+
+  </section>
+{% endif %}

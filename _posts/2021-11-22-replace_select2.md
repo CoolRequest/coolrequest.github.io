@@ -2,7 +2,7 @@
 layout: post
 title: Replacing Select2 with Tom Select + Stimulus
 date: 2021-11-25 15:12:40 -0300
-categories: Stimulus JS Rails
+tags: Stimulus JS Rails
 ---
 We all used [Select2](https://select2.org/). We all depended on it for a long time, for all our Select/Autocomplete needs. But it's been showing signs of aging for quite a while, and it's one of the last libraries that still keeps me tied to [jQuery](https://love2dev.com/blog/jquery-obsolete/).
 
@@ -128,7 +128,7 @@ export default class extends Controller {
       responseKind: 'json'
     })
 
-    if(response.ok) {
+    if (response.ok) {
       const list = await response.json
       callback(list)
     } else {
@@ -185,6 +185,12 @@ The stimulus controller is somewhat similar to the previous one, but with enough
 
 {% highlight js %}
 
+// app/javascript/controllers/ts/filter_controller.js
+
+import { Controller } from "@hotwired/stimulus"
+import { get }        from "@rails/request.js"
+import TomSelect      from "tom-select"
+
 export default class extends Controller {
   static targets = [ "filter", "other" ]
   static values  = { url: String }
@@ -192,7 +198,7 @@ export default class extends Controller {
   connect() {
 
     this.filterTarget.addEventListener('change', ev => {
-      if(this.selectedFilter)
+      if (this.selectedFilter)
         this.fetchItems()
       else
         this.clearItems()
@@ -207,7 +213,7 @@ export default class extends Controller {
       responseKind: 'json'
     })
 
-    if(response.ok)
+    if (response.ok)
       this.setItems(await response.json)
     else
       console.log(response)

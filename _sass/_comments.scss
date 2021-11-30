@@ -1,0 +1,23 @@
+.comments {
+
+  button,
+  input[type='text'],
+  input[type='email'],
+  input[type='search'],
+  input[type='submit'],
+  textarea {
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+
+  label {
+    font-size: 75%;
+    color: var(--accent-color);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+}
