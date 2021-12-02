@@ -3,20 +3,18 @@
   <section class="comments">
     <h2>Comments</h2>
     <p>If you have any questions or feedback regarding this post, please leave your comment below.</p>
-
-    <div class="comments__existing">
-      {% for comment in site.data.comments[page.slug] %}
-        <div class="comment__author">
-          {{- comment[1].name | strip_html }}
-          <span class="comment__date">
-            - {{ comment[1].date | date:"%d/%m/%Y %H:%M" }}
-          </span>
-        </div>
-        <div class="message comment__body">
-          {{ comment[1].message | strip_html | markdownify }}
-        </div>
-      {% endfor %}
-    </div>
+    
+    {% for comment in site.data.comments[page.slug] %}
+      <div class="comment__author">
+        {{- comment[1].name | strip_html }}
+        <span class="comment__date">
+          - {{ comment[1].date | date:"%d/%m/%Y %H:%M" }}
+        </span>
+      </div>
+      <div class="message comment__body">
+        {{ comment[1].message | strip_html | markdownify }}
+      </div>
+    {% endfor %}
 
     <form method="POST" action="https://cr-staticman.herokuapp.com/v3/entry/github/CoolRequest/coolrequest.github.io/master/comments">
       <input name="options[redirect]" type="hidden" value="https://{{ site.url }}">
