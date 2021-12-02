@@ -20,7 +20,7 @@
     {% endfor %}
 
     <form method="POST" action="https://cr-staticman.herokuapp.com/v3/entry/github/CoolRequest/coolrequest.github.io/main/comments">
-      <input name="options[redirect]" type="hidden" value="{{ page.url }}">
+      <input name="options[redirect]" type="hidden" value="{{site.url}}{{ page.url }}">
       <input name="options[slug]" type="hidden" value="{{ page.slug }}">
 
       <label>Name</label>
