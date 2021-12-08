@@ -1,70 +1,26 @@
 ---
 layout: post
-title: Building a Docker Image for your Rails Application
+title: Building a Docker Image for your Rails Application - Part 3
+date: 2022-01-08
+tags: Docker Rails CI
+categories: Docker
 ---
 
-<!-- part 1 - configuration -->
+<!-- intro -->
 
+This is part 2 of a 3-part series on building a Docker image for your Ruby on Rails application. If you missed part 1, check it out [here]({% post_url 2021-11-03-docker_image_rails_part1 %}).
 
-<!-- part 2 - base image -->
+### Install The Application
 
-### Preparing the Environment
-Now that the configuration data is taken care of, let’s look at the steps necessary for building the image that will run the application. These are the commands that will go in the application's Dockerfile. Starting from a very skinny linux distribution, we need to install all the things necessary to precompile the assets and run the app. In summary, what needs to be done is:
-1. Setup the environment
-- Choose a base image to start from
-- Install basic build tools
-- Install *nodejs*, *yarn*, *bundler*
-- Install database client
+So far, we have covered environment setup. Now we will start installing the application itself. 
+
 2. Install the application
 - Install *ruby* dependencies
 - Install *javascript* dependencies
 - Copy application files
 - Precompile the assets
 
-Let's go over these, step by, step. We start from the official ruby Docker image:
-{% highlight docker %}
-FROM ruby:2.7.4-slim
-{% endhighlight %}
-
-Then, add basic build tools which will be required in subsequent steps:
-{% highlight docker %}
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-              ca-certificates \
-              curl \
-              git \
-              openssh-client \
-              build-essential \
-              libc6 \
-              gnupg \
-              shared-mime-info && \
-    rm -rf /var/lib/apt/lists/*
-{% endhighlight %}
-
-We will be needing *nodejs* to handle assets precompiling, *yarn* to install javascript dependencies, and *bundler* for the ruby gems:
-{% highlight docker %}
-RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends nodejs && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN npm install --global yarn
-
-RUN gem install bundler
-{% endhighlight %}
-
-Next step, database client. You will need to install the client library / headers. This part is highly dependable on the database you are using. Here is what you would need for *postgresql*:
-
-{% highlight docker %}
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends libpq-dev && \
-    rm -rf /var/lib/apt/lists/*
-{% endhighlight %}
-
-<!-- part 3 - base image -->
-### Install The Application
-
-So far, we have covered environment setup. Now we will start installing the application itself. First, let's install the ruby dependencies:
+First, let's install the ruby dependencies:
 
 {% highlight docker %}
 COPY Gemfile .
