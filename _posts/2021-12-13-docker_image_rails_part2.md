@@ -3,7 +3,6 @@ layout: post
 title: Building a Docker Image for your Rails Application - Part 2
 date: 2021-12-13
 tags: Docker Rails CI
-categories: Docker
 ---
 
 <!-- intro -->
