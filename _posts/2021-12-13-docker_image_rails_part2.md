@@ -18,7 +18,7 @@ This is part 2 of a 3-part series on building a Docker image for your Ruby on Ra
 The image you will be building should contain all the dependencies needed to install the gems, instal the javascript packages, precompile the assets and run the app. In summary, these are the steps to follow:
 1. Choose a base image to start from
 2. Install *nodejs* runtime
-3. Install package managers (*yarn* and *bundler*)
+3. Install *yarn*
 4. Install the database client
 
 Let's go over these steps, one at a time.
@@ -52,14 +52,13 @@ Note that this is a single `RUN` command that executes multiple shell operations
 
 A Docker image is built up from a series of [layers](https://docs.docker.com/storage/storagedriver/#images-and-layers). Each docker RUN command that modifies the image contents creates an additional layer on the filesystem. If we had done the above operation on 4 steps, it would result in 4 layers that have take storage space on your system. Doing the 4 operaions in one step results in only one layer which has the files relevant to run *node*.
 
-### Install package managers (*yarn*, *bundler*)
+### Install *yarn*
 
-This part is pretty straightforward:
+`Yarn` will be necessary to install javascript dependencies. 
+The installation, using `npm`, is pretty straightforward:
 
 {% highlight docker %}
 RUN npm install --global yarn
-
-RUN gem install bundler
 {% endhighlight %}
 
 ### Database Client
