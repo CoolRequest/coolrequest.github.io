@@ -1,0 +1,5 @@
+_id: 4d943860-619a-11ec-be46-e3450aaae298
+name: Jerome
+email: 7782fe89757e9925a7eda0910f5635c2
+message: "HTML over the wire has many merits.  Before hotwire, the way to do autocomplete with filter was to have some intermediate step setting the filter.  At this point Hotwire may actually be burdening the server pointlessly 3, 4, 5 times (as characters get added in the UI) per single request.\r\n\r\nAssuming data that is static - say Nations > Regions > Municipalities - how could this approach connect to a microservice that could be dimensioned (and cache enabled!) for similar high volume queries, leaving the application to handling its native function?"
+date: 1640007589
