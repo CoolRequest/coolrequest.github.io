@@ -1,0 +1,5 @@
+_id: f04d0c10-82b7-11ec-9dcb-5d8123c74c28
+name: Mauricio
+email: 3da74b36ea78f721a6101baf8f957259
+message: "That's right, there are some minor differences in images used for development or production purposes. The Dockerfile described here is not optimized for production, and should work in both cases.\r\n\r\nWhen I mentioned \"cache\" in the post, I was referring to the docker build cache (caching of image layers), not the bundler cache. The strategy of copying only Gemfile and Gemfile.lock before running bundler ensures that the resulting image layer containing the gems can be reused even if the rest of the application code changes."
+date: 1643648706
