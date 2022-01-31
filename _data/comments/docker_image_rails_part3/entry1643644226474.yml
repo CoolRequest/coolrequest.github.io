@@ -1,0 +1,5 @@
+_id: 81f82880-82ad-11ec-b542-9300a8e92c83
+name: Sébastien
+email: 4821024dd8219fe8864db98a52205996
+message: "Great post thanks!\r\n\r\nIn my opinion the way you deal with dependencies can differ wether your are building an image for a local dev environment or for production.\r\n`\r\nOn my local dev machine I use bundle check || bundle cache in the entrypoint script.\r\nThat way my rails dependencies are stored in vendor/cache in the rails project folder.\r\n\r\nThere is no need to \"cache\" the dependencies in an image used for a dev environment:\r\nThis is only done for performance purpose on CI/CD or for production release."
+date: 1643644226
