@@ -1,0 +1,8 @@
+_id: db1f4720-82be-11ec-9942-b5eca7e27db0
+name: Sandro Duarte
+email: 8bd2103202e27763ed2ce0138ef63121
+message: >-
+  You can configure the loadThrottle, which is 'The number of milliseconds to
+  wait before requesting options from the server'. The default is 300ms.
+  (https://tom-select.js.org/docs/)
+date: 1643651677
