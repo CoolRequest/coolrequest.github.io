@@ -1,0 +1,9 @@
+_id: 48296670-ada3-11ec-9bec-6d0025685b39
+name: Thomas Bindzus
+email: b4b6b4d7c6f5d829a4667a21971a34aa
+message: >-
+  I think it's important to notice that there is a stylesheet, which should be
+  included to make TomSelect work properly, this line in your  @import
+  "tom-select/dist/scss/tom-select.bootstrap5"; in your
+  bootstrap.application.scss file.
+date: 1648367734
