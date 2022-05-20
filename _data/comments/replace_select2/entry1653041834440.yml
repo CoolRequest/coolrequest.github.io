@@ -1,0 +1,7 @@
+_id: 04cfb200-d826-11ec-9781-e36a59fe8716
+name: Mauricio Menegaz
+email: 3da74b36ea78f721a6101baf8f957259
+message: >-
+  Thank you for pointing that out. The demo app was built with ruby 3.0 and
+  Rails 7. Different versions might require some small changes.
+date: 1653041834
