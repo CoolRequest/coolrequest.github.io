@@ -1,0 +1,5 @@
+_id: 223d7f50-d12a-11ec-893d-4f5b3a16b665
+name: SK
+email: f94c88ac9301b51dcce56ab24e896bb7
+message: "Great guide!\r\n\r\nNote: The following does not work for all ruby versions:\r\n\r\nrender json: list.map do |u|\r\n    {\r\n      text: u.name,\r\n      value: u.id\r\n    }\r\n  end\r\n\r\nInstead, one should use (note the added parentheses):\r\n\r\nrender(json: list.map do |u|\r\n    {\r\n      text: u.name,\r\n      value: u.id\r\n    }\r\n  end)"
+date: 1652273943
