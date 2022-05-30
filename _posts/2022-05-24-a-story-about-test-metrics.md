@@ -9,7 +9,7 @@ Once upon a time, there was a Ruby on Rails programmer called John. John cared a
 
 He had recently learned about automatic code coverage analysis, and was very excited to know that not only you can write automated tests, but you can also ensure that 100% of your code is covered by them. This way nothing could go wrong!
 
-So, one day, his boss told him aboout the requirements for a new software. He needed to calculate the market price of a house, using the following specification:
+So, one day, his boss told him about the requirements for a new software. He needed to calculate the market price of a house, using the following specification:
 
 <div class="message">
 <p>A house is considered big if it has at least <b>3 rooms</b> and <b>2 bathrooms.</b> </p>
@@ -88,7 +88,7 @@ If you think of your program as a machine that transforms inputs into outputs, y
 - How can they be combined?
 - Am I testing all the combinations?
 
-Of course, most of the time we are talking about strings, integers, and floating point numbers, and and the possible combination of inputs is huge, making it not feasible to test them all. 
+Of course, most of the time we are talking about strings, integers, and floating point numbers, and and the possible combination of inputs is huge, making it unfeasible to test them all. 
 But you shoud be able to partition this space into meaningful subsets.
 
 Back to our example, one possible way to partition the input space is this:
