@@ -19,6 +19,7 @@ paginate:         5
                     # Or '/blog/page:num' if you want to move your index pages
 
 remote_theme: fongandrew/hydeout
+# theme: jekyll-theme-hydeout # pra funcionar em desenv
 
 plugins:
   - jekyll-feed

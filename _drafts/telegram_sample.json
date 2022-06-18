@@ -1,0 +1,61 @@
+{
+    "ok": true,
+    "result": [
+        {
+            "update_id": 543829396,
+            "message": {
+                "message_id": 5,
+                "from": {
+                    "id": 5366032645,
+                    "is_bot": false,
+                    "first_name": "Mauricio",
+                    "last_name": "Menegaz",
+                    "language_code": "pt-br"
+                },
+                "chat": {
+                    "id": -541586837,
+                    "title": "Grupo Teste",
+                    "type": "group",
+                    "all_members_are_administrators": true
+                },
+                "date": 1654080387,
+                "text": "/enable",
+                "entities": [
+                    {
+                        "offset": 0,
+                        "length": 7,
+                        "type": "bot_command"
+                    }
+                ]
+            }
+        },
+        {
+            "update_id": 543829397,
+            "message": {
+                "message_id": 6,
+                "from": {
+                    "id": 5366032645,
+                    "is_bot": false,
+                    "first_name": "Mauricio",
+                    "last_name": "Menegaz",
+                    "language_code": "pt-br"
+                },
+                "chat": {
+                    "id": -541586837,
+                    "title": "Grupo Teste",
+                    "type": "group",
+                    "all_members_are_administrators": true
+                },
+                "date": 1654080500,
+                "text": "/notifications",
+                "entities": [
+                    {
+                        "offset": 0,
+                        "length": 14,
+                        "type": "bot_command"
+                    }
+                ]
+            }
+        }
+    ]
+}
