@@ -1,0 +1,5 @@
+_id: 2f63b5a0-2a99-11ed-82e6-4b8b886d439d
+name: Jayson Regalario
+email: a4c0fd31aed2aaf0ea8bcb6493309378
+message: "I follow the \"simple case\" but it throws error on the console like \r\n\r\n Failed to register controller: ts--select (controllers/ts/select_controller) TypeError: Failed to resolve module specifier \"tom-select\". Relative references must start with either \"/\", \"./\", or \"../\"."
+date: 1662107293
